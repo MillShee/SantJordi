@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sant Jordi ❤️</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Georgia", serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff0f5, #fffdf2);
+      color: #2b2b2b;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    header h1 {
+      font-size: 2.7rem;
+      color: #b3002d;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .photo {
+      width: 100%;
+      height: 230px;
+      border-radius: 18px;
+      border: 2px solid rgba(179, 0, 45, 0.3);
+      background-color: rgba(255, 255, 255, 0.8);
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.25s ease;
+    }
+
+    .photo:hover {
+      transform: scale(1.02);
+    }
+
+    .photo::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(179, 0, 45, 0.8);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* Botón carta en el centro */
+    .center-card {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      height: 230px;
+      border-radius: 18px;
+      border: 2px dashed rgba(179, 0, 45, 0.6);
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease, background 0.25s ease;
+      position: relative;
+    }
+
+    .center-card:hover {
+      transform: scale(1.03);
+      background: rgba(255, 230, 240, 0.95);
+    }
+
+    .center-card h2 {
+      font-size: 1.6rem;
+      color: #b3002d;
+      margin-bottom: 10px;
+    }
+
+    .center-card p {
+      font-size: 1rem;
+      color: #444;
+      padding: 0 10px;
+    }
+
+    .icon {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    /* Carta (pantalla completa) */
+    .letter-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 240, 245, 0.97);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 999;
+      overflow-y: auto;
+    }
+
+    .letter {
+      background: white;
+      max-width: 800px;
+      width: 100%;
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 2px solid rgba(179, 0, 45, 0.3);
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+      position: relative;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0px); }
+    }
+
+    .letter h2 {
+      color: #b3002d;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .letter p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .signature {
+      margin-top: 30px;
+      text-align: right;
+      font-style: italic;
+      color: #b3002d;
+      font-size: 1.2rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      border: none;
+      background: #b3002d;
+      color: white;
+      font-size: 1rem;
+      padding: 8px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: #800020;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .center-card {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .photo, .center-card {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🌹 Mi libería para Carlos ❤️</h1>
+    <p>Mi pequeño regalo de Sant Jordi para el mejor novio del mundo.</p>
+  </header>
+
+  <div class="container">
+    <div class="gallery">
+
+      <div class="photo" id="img1" data-label="Carnaval"></div>
+      <div class="photo" id="img2" data-label="Río"></div>
+      <div class="photo" id="img3" data-label="En tu casita"></div>
+
+      <div class="photo" id="img4" data-label="San Valentín"></div>
+
+      <!-- Carta en el centro -->
+      <div class="center-card" id="openLetter">
+        <div class="icon">📖🌹</div>
+        <h2>Haz clic aquí</h2>
+        <p>Para leer el primer capitulo del libro "Carlos y Eva" 💌</p>
+      </div>
+
+      <div class="photo" id="img5" data-label="Sant Jordi"></div>
+
+      <div class="photo" id="img6" data-label="Graduación"></div>
+      <div class="photo" id="img7" data-label="Salón del manga"></div>
+      <div class="photo" id="img8" data-label="Losh dosh"></div>
+
+    </div>
+  </div>
+
+  <footer>
+    Hecho con amor para el mejor novio del mundo 🌹❤️
+  </footer>
+
+  <!-- Pantalla carta -->
+  <div class="letter-screen" id="letterScreen">
+    <div class="letter">
+      <button class="close-btn" id="closeLetter">Cerrar ✖</button>
+
+      <h2>Primer Capitulo 💌</h2>
+
+      <p>
+        Hola mi amor, ya sabes cual es la tradición, ¿no? en Sant Jordi se regalan libros,
+        bueno, este libro será un poco especial, este es el libro de nuestra historia desde
+        mi punto de vista y como lo viví todo.
+        Mi idea es que este sea el primer capitulo y continuarlo cuando haya otra ocasión importante,
+        como cuando cumplamos dos años o cuando sea tu cumpleaños, cosas así.
+        Espero que te guste mi amor, ya que lo he escrito con mucho amor, espero dejarte con hype para la parte dos.
+      </p>
+
+      <p>
+        Había una vez… Nah, no la voy a empezar así, pero si te voy a decir nuestra historia desde mi punto de vista, desde como yo lo sentí, bueno, no solo yo, mi corazón, y como llegaste a cambiarme la vida por completo.
+      </p>
+
+      <p>
+        Empecemos por quien me consideraba yo a mi misma antes de conocerte. Realmente nunca pensé que era alguien especial, simplemente era una chica más con, según yo consideraba, gustos distintos, no porque fueran raros sino porque en esa clase todos eran npc, eso pensaba hasta que vi llegar a un niño, demasiado guapo, fue lo primero que pensé, bueno, quizá lo segundo, ya que lo primero que pensé fue que entrarías dando una voltereta y diciendo algún meme del que ya no me acuerdo bien. 
+      </p>
+
+      <p>
+        Obviamente no fue así, sin embargo cuando te vi pasar por la puerta, por culpa de esos pensamientos se me salió una carcajada, me sentí tan mal que inmediatamente puse cara seria y te miré, me asustaba mucho que pensarás que me había reído de ti o que estaba intentando burlarme de ti. Así que, podría decir que, a parte de lo guapo que eras (y eres), lo primero que pensé fue que no quería herirte sin querer, ni si quiera por una tontería como pensar que entrarías dando volteretas..
+      </p>
+
+      <p>
+        Nunca me había considerado una persona atractiva y la idea de tener un amor correspondido se veía difícil para mi, de todas formas, ahora que sé lo que es el amor me doy cuenta que nunca me había enamorado realmente. No era que no pudiera tener un amor, sino que aun no lo había encontrado realmente. Pero era lo que en ese momento pensaba, así que nunca pensé que te fijarías en mi.
+      </p>
+
+      <p>
+        Pero lo que había empezado como “buah que guapo es” acabó siendo un fuerte sentimiento en mi corazón que no había sentido nunca, todo sucedió en un instante, del que me acuerdo perfectamente. Estaba con mis amigas pintandonos la cara de Sukuna después de decorar las calabazas (nunca la acabamos), Luna no era la mayor experta en hacer las lineas de Sukuna, no me importaba demasiado como quedasen hasta que vi a alguien levantarse y preguntar si él podia hacerlo. Mi cerebro se desconectó por completo, no es un decir, realmente no puedo recordar que algún pensamiento recorriera mi mente en aquel segundo, solo contesté “vale” casi como si mi boca se hubiera movido sola.
+      </p>
+
+      <p>
+        Y, fue en ese exacto momento donde te acercaste para pintarme la cara que lo sentí, podía ver tu hermoso rostro de cerca, también podía oler tu delicioso y atractivo olor. Cuando empezaste, podía mirarte a los ojos, sé que no me devolviste la mirada porque estabas concentrado pintandome la cara, ya que si lo hubieses hecho, directamente me hubiese caido de la silla. Solo aguanté como 1 minuto mirándote a los ojos antes de apartar la mirada, ponerme nerviosa y reirme poniendo de excusa como me estaban mirando mis amigas de al lado, en realidad, lo que estaba pasando en mi cuerpo en este momento solo lo puedo definir como el momento en el que mi corazón dejó de latir para mi y empezó a hacerlo por ti, quizá eso explique el intenso sentimiento que pude sentir en mi pecho.
+      </p>
+
+      <p>
+        Cuando acabaste, solo pude decir lo primero que se me ocurrió y era decirte que se lo hicieras a mis amigas también, intentando sonar indiferente, pero en realidad ni si quiera yo era capaz de explicar que era eso que estaba sintiendo, y lo había sentido en apenas un instante.
+      </p>
+
+      <p>
+        La teoría del hilo rojo puede sonar como una tontería a veces pero es una de las unicas explicaciones que puedo encontrar para lo que sentí aquel día y lo que pasó a partir de ahí, quizá no era un “hilo rojo” pero definitivamente mi destino era encontrarte, y de eso estoy completamente segura.
+      </p>
+
+      <p>
+        Podríamos decir que ese fue el momento del flechazo, buah, literal es la palabra perfecta para describirlo, de hecho me gusta tanto que a partir de ahora, voy a definir ese instante como el momento en el que me flechaste, ¡Gracias Sukuna!
+      </p>
+
+      <p>
+        Ese mismo día, recuerdo como hice una llamada de como 5 horas con Evelyn, una llamada puramente hablando de ti, intentando explicar lo que sentía, aunque ni si quiera yo lo veia claro. Imaginate, 5 horas sin parar hablando de ti, de tu rostro, de tu cuerpo… ¡de lo que pasó! Y es que bueno, sabemos lo que pasó con ella pero, siendo sinceros Evelyn siempre tuvo claro desde el primer momento que me había enamorado también y bueno, mi cabeza aun no lo sabía pero mi corazón lo tuvo claro desde el primer instante.
+      </p>
+
+      <p>
+        A partir de ahí, odiaba con toda mi alma los fines de semana, y es que entre semana era el momento donde podía verte, el simple hecho de estar una mesa por delante de ti se sentía un logro, era tan satisfactorio que no podía esperar para volverlo a intentar, para volver a sentirme cerca de ti o simplemente estar dentro de tu existencia. 
+      </p>
+
+      <p>
+        Tengo el recuerdo de un día, el cual no tengo claro cual fue, pero recuerdo que faltó mucha gente una tarde en la que se hacían exposiciones con la María José, las exposiciones de la Guerra de Israel me parece que eran pero que por la poca gente que eramos se hicieron 1 o 2. No tenía pensado ir, hasta que recordé que tú te quedabas al comedor, no podía perder esa oportunidad de verte y por suerte, Iris, que ya sabes que se obsesionó con el Alejandro, me dijo que iba a ir solo para verlo así que decidí ir también a clase esa tarde. Me acuerdo de cuando Iris estaba diciendome que le quería pedir el número al Alejandro, así que, digamos que le animé a hacerlo de forma completamente desinteresada… (mentira). Bueno, le animé a que lo hiciera porque le conté que te lo podría pedir a ti, y ahí tenía una excusa para hablarte
+      </p>
+
+      <p>
+        Y la historia continuará más adelante... pero no puedo acabar este primer capitulo sin agradecerte todos los momentos en los que estás ahí ayudandome, como, aunque yo me queje mucho,  aunque peleemos por tonterías, yo soy la persona más agradecida del mundo por tener a mi lado día tras día, eres mi fuente de felicidad, mi fuerza diaría y realmente eres todo para mi, fuera de las palabras bonitas, lo que siento por ti jamás podrá ser escrito en un papel, pero quiero que sepas lo mucho que te amo incondicionalmente, un amor que jamás terminará y que no puedo esperar el momento en el que nos casemos y vivir nuestra vida juntos para siempre, te amo mi vida, gracias por este Sant Jordi a tu lado.      </p>
+
+      <p class="signature">
+        Continuará, <br>
+        ❤️ Eva (con ayuda de Mabel y Cat)
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Aquí pones los nombres de las imágenes que usarás
+    const images = [
+      { id: "img1", file: "imagen1.jpeg" },
+      { id: "img2", file: "imagen2.jpeg" },
+      { id: "img3", file: "imagen3.jpeg" },
+      { id: "img4", file: "imagen4.jpeg" },
+      { id: "img5", file: "imagen5.jpeg" },
+      { id: "img6", file: "imagen6.jpeg" },
+      { id: "img7", file: "imagen7.jpeg" },
+      { id: "img8", file: "imagen8.jpeg" }
+    ];
+
+    // Cargar imágenes en los cuadros
+    images.forEach(img => {
+      const element = document.getElementById(img.id);
+      element.style.backgroundImage = `url('${img.file}')`;
+    });
+
+    // Carta
+    const openLetter = document.getElementById("openLetter");
+    const letterScreen = document.getElementById("letterScreen");
+    const closeLetter = document.getElementById("closeLetter");
+
+    openLetter.addEventListener("click", () => {
+      letterScreen.style.display = "flex";
+    });
+
+    closeLetter.addEventListener("click", () => {
+      letterScreen.style.display = "none";
+    });
+
+    // Cerrar si haces clic fuera de la carta
+    letterScreen.addEventListener("click", (e) => {
+      if (e.target === letterScreen) {
+        letterScreen.style.display = "none";
+      }
+    });
+  </script>
+
+  <!-- 🌹 ANIMACIÓN DE PÉTALOS DE ROSA (Sant Jordi) -->
+<style>
+  .petal {
+    position: fixed;
+    top: -50px;
+    width: 18px;
+    height: 18px;
+    background: rgba(179, 0, 45, 0.85);
+    border-radius: 0% 100% 0% 100%;
+    transform: rotate(45deg);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.9;
+    animation: fall linear forwards;
+    box-shadow: 0 0 8px rgba(179, 0, 45, 0.25);
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(0px) rotate(0deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* 📱 OPTIMIZACIÓN PARA MÓVIL */
+@media (max-width: 600px) {
+
+  header {
+    padding: 25px 15px 10px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .photo {
+    height: 200px;
+    border-radius: 16px;
+  }
+
+  .center-card {
+    height: 210px;
+    border-radius: 16px;
+    padding: 15px;
+  }
+
+  .center-card h2 {
+    font-size: 1.4rem;
+  }
+
+  .center-card p {
+    font-size: 0.95rem;
+  }
+
+  .icon {
+    font-size: 2.2rem;
+  }
+
+  .letter {
+    padding: 25px 18px;
+    border-radius: 16px;
+  }
+
+  .letter h2 {
+    font-size: 1.6rem;
+  }
+
+  .letter p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .signature {
+    font-size: 1.1rem;
+  }
+
+  .close-btn {
+    font-size: 0.9rem;
+    padding: 7px 12px;
+    border-radius: 10px;
+  }
+
+  footer {
+    font-size: 0.95rem;
+    padding: 18px 10px;
+  }
+}
+
+.letter-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 240, 245, 0.97);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 999;
+  overflow: hidden; /* IMPORTANTE */
+}
+
+.letter {
+  background: white;
+  max-width: 800px;
+  width: 100%;
+  max-height: 85vh; /* IMPORTANTE */
+  overflow-y: auto; /* IMPORTANTE */
+  padding: 40px 30px;
+  border-radius: 20px;
+  border: 2px solid rgba(179, 0, 45, 0.3);
+  box-shadow: 0px 10px 25px rgba(0,0,0,0.15);
+  position: relative;
+}
+</style>
+
+
+
+
+
+<script>
+  function createPetal() {
+    const petal = document.createElement("div");
+    petal.classList.add("petal");
+
+    // Posición horizontal aleatoria
+    petal.style.left = Math.random() * 100 + "vw";
+
+    // Tamaño aleatorio
+    const size = Math.random() * 12 + 10;
+    petal.style.width = size + "px";
+    petal.style.height = size + "px";
+
+    // Duración aleatoria
+    const duration = Math.random() * 4 + 4;
+    petal.style.animationDuration = duration + "s";
+
+    // Movimiento lateral con rotación
+    petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+    // Añadir al body
+    document.body.appendChild(petal);
+
+    // Borrar cuando termine
+    setTimeout(() => {
+      petal.remove();
+    }, duration * 1000);
+  }
+
+  // Generar pétalos constantemente
+  setInterval(createPetal, 250);
+</script>
+
+</body>
+</html>
